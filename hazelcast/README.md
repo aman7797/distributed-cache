@@ -33,3 +33,19 @@ The overview of application developed as follows
   <artifactId>hazelcast-spring</artifactId>
 </dependency>
 ```
+
+## Create Hazelcast Member
+
+When we start the ServerNode application, we can see the flowing text in the console which means that we create a new Hazelcast node in our JVM which will have to join the cluster.
+
+    Members [1] {
+        Member [192.168.1.105]:5701 - 899898be-b8aa-49aa-8d28-40917ccba56c this
+    }
+To create multiple nodes we can start the multiple instances of ServerNode application. Hazelcast will automatically create and add a new member to the cluster.
+
+For example, if we run the ServerNode application again, we will see the following log in the console which says that there are two members in the cluster.
+
+    Members [2] {
+    Member [192.168.1.105]:5701 - 899898be-b8aa-49aa-8d28-40917ccba56c
+    Member [192.168.1.105]:5702 - d6b81800-2c78-4055-8a5f-7f5b65d49f30 this
+    }
