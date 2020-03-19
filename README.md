@@ -1,4 +1,6 @@
-# What is Distributed Cache
+# Distributed Cache
+
+## What is Distributed Cache
 
 The distributed cache is indeed many machines acting as one logical unit. So you might have five computers all running and they take care of data integrity and redundancy for you. In other words if one machine dies, you can still get your data from the cluster. (But yes, each node will have a copy of data in case of failures.)
 
@@ -46,3 +48,4 @@ The distributed cache is indeed many machines acting as one logical unit. So you
 | Durability                         | yes                                                                         | yes                                                                                                                        | yes                                                                                   | yes                                                                         |        |                    |
 | In-memory capabilities             | yes                                                                         | yes                                                                                                                        | yes                                                                                   | yes                                                                         |        |                    |
 | User concepts                      | no                                                                          | User and Administrator separation with password-based and LDAP integrated Authentication                                   | Role-based access control                                                             | Simple password-based access control                                        |        |                    |
+
