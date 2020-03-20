@@ -17,13 +17,13 @@ import com.hazelcast.config.MaxSizeConfig;
 public class HazelcastApplication {
 
 	@Bean
-	 public Config hazelcastConfig(){
-	       return new Config().setInstanceName("hazelcast-instance")
-	                .addMapConfig(new MapConfig().setName("itemCache")
-	                .setMaxSizeConfig(new MaxSizeConfig(300,MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
-	                .setEvictionPolicy(EvictionPolicy.LRU) //LRU (Last Recent Use)
-	                .setTimeToLiveSeconds(2000));
-	    }
+	public Config hazelcastConfig() {
+		return new Config().setInstanceName("hazelcast-instance")
+				.addMapConfig(new MapConfig().setName("itemCache")
+						.setMaxSizeConfig(new MaxSizeConfig(300, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+						.setEvictionPolicy(EvictionPolicy.LRU) // LRU (Last Recent Use)
+						.setTimeToLiveSeconds(2000));
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HazelcastApplication.class, args);

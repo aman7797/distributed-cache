@@ -1,5 +1,7 @@
 package com.cache.hazelcast.repo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,10 +14,12 @@ public class ItemRepository {
 
     @Autowired
     JdbcTemplate template;
+    
+    private static Logger log = LoggerFactory.getLogger(ItemRepository.class);
 
     /*Getting a specific item by item id from table*/
     public Item getItem(int itemId){
-        System.out.println("Reading Item From Repository..");
+        log.info("Reading Item From Repository..");
         String query = "SELECT * FROM ITEM WHERE ID=?";
         return template.queryForObject(query,new Object[]{itemId},new BeanPropertyRowMapper<>(Item.class));
     }

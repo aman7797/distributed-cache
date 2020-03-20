@@ -1,5 +1,7 @@
 package com.cache.hazelcast.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +15,17 @@ public class Controller{
 
     @Autowired
     ItemCache itemCache;
+    
+    private static Logger log = LoggerFactory.getLogger(Controller.class);
+    
     @GetMapping("/item/{itemId}")
     @ResponseBody
     public ResponseEntity<Item> getItem(@PathVariable int itemId){
-        System.out.println("RestController..");
+    	log.info("RestController..");
         long start = System.currentTimeMillis();
         Item item = itemCache.getItem(itemId);
         long end = System.currentTimeMillis();
-        System.out.println("Took : " + ((end - start) / 1000+" sec."));
+        log.info("Took : " + ((end - start) / 1000+" sec.") + "   output   :: "  + item.getName());
         return new ResponseEntity<Item>(item, HttpStatus.OK);
     }
 

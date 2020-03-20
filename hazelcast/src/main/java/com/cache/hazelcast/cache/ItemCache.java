@@ -1,5 +1,7 @@
 package com.cache.hazelcast.cache;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -14,10 +16,12 @@ public class ItemCache {
 
     @Autowired
     ItemRepository itemRepo;
+    
+    private static Logger log = LoggerFactory.getLogger(ItemCache.class);
 
     @Cacheable(value="itemCache", key="#id")
     public Item getItem(int id){
-        System.out.println("In ItemCache Component..");
+        log.info("In ItemCache Component..");
         Item item = null;
         try{
             item = itemRepo.getItem(id);
@@ -30,13 +34,13 @@ public class ItemCache {
 
     @CacheEvict(value="itemCache",key = "#id")
     public int deleteItem(int id){
-        System.out.println("In ItemCache Component..");
+        log.info("In ItemCache Component..");
         return itemRepo.deleteItem(id);
     }
 
     @CachePut(value="itemCache")
     public void updateItem(Item item){
-        System.out.println("In ItemCache Component..");
+        log.info("In ItemCache Component..");
         itemRepo.updateItem(item);
     }
 }

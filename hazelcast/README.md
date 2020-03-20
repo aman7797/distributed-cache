@@ -62,3 +62,11 @@ For example, if we run the ServerNode application again, we will see the followi
     Member [192.168.1.105]:5701 - 899898be-b8aa-49aa-8d28-40917ccba56c
     Member [192.168.1.105]:5702 - d6b81800-2c78-4055-8a5f-7f5b65d49f30 this
     }
+
+## Test
+
+```curl
+curl --location --request GET 'localhost:9080/item/1' \
+--header 'Content-Type: application/json'
+```
+

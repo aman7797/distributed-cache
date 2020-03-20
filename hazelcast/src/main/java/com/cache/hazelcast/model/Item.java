@@ -39,4 +39,11 @@ public class Item implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", category=" + category + "]";
+	}
+    
+    
 }
