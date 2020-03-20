@@ -22,17 +22,33 @@ The overview of application developed as follows
 * A Java Map API accesses the distributed key-value store.
 
 ## Setup Database
-Create a table name `item`
-```sql
-CREATE TABLE item(id int NOT NULL, name VARCHAR(20), category VARCHAR(20));
-```
+1. Download the MySQL zip
+2. Unzip the downloaded file and open the command line at the unziped location, go to `bin` directory
+3. To initialize the MySQL run the below mentioned command, it will create the data directory in the same folder
 
+        mysqld  --initialize-insecure
+4. To start the server 
 
+        mysqld.exe --console
 
-Add the below properties to the application.properties file..
+    ![MySQL Setup](img/setup_mysql.png)
+5. Done with the setup, we can start with the MySQL to start the SQL
 
-    spring.datasource.url=jdbc:mysql://localhost:3306/hibernate_test
-    spring.datasource.username=root
+        mysql -u root
+    ![MySQL Started](img/started_mysql.png)
+6. Create database 
+
+        CREATE DATABASE hibernate_test;
+    
+    ![MySQL Started](img/create_database.png)
+7. Create a table name `item`
+    ```sql
+    CREATE TABLE item(id int NOT NULL, name VARCHAR(20), category VARCHAR(20));
+    ```
+8. Add the below properties to the application.properties file..
+
+        spring.datasource.url=jdbc:mysql://localhost:3306/hibernate_test
+        spring.datasource.username=root
 
 ## Dependencies
 
@@ -49,6 +65,18 @@ Add the below properties to the application.properties file..
 
 ## Create Hazelcast Member
 
+To configure Hazelcast, add the code in the main class.
+
+```java
+@Bean
+	public Config hazelcastConfig() {
+		return new Config().setInstanceName("hazelcast-instance")
+				.addMapConfig(new MapConfig().setName("itemCache")
+						.setMaxSizeConfig(new MaxSizeConfig(300, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+						.setEvictionPolicy(EvictionPolicy.LRU) // LRU (Last Recent Use)
+						.setTimeToLiveSeconds(2000));
+	}
+```
 When we start the ServerNode application, we can see the flowing text in the console which means that we create a new Hazelcast node in our JVM which will have to join the cluster.
 
     Members [1] {
@@ -70,3 +98,4 @@ curl --location --request GET 'localhost:9080/item/1' \
 --header 'Content-Type: application/json'
 ```
 
+![Output](img/output.png)
