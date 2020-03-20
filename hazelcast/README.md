@@ -22,16 +22,12 @@ The overview of application developed as follows
 * A Java Map API accesses the distributed key-value store.
 
 ## Setup Database
-Create a table name `Employee`
+Create a table name `item`
 ```sql
-DROP TABLE IF EXISTS employee;
-CREATE TABLE employee (
-  id int NOT NULL,
-  name VARCHAR(100),
-  mobile VARCHAR(100),
-  email VARCHAR(100)
-);
+CREATE TABLE item(id int NOT NULL, name VARCHAR(20), category VARCHAR(20));
 ```
+
+
 
 Add the below properties to the application.properties file..
 
