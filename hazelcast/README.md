@@ -21,6 +21,23 @@ The overview of application developed as follows
 * The data can be persisted from Hazelcast to a relational or NoSQL database.
 * A Java Map API accesses the distributed key-value store.
 
+## Setup Database
+Create a table name `Employee`
+```sql
+DROP TABLE IF EXISTS employee;
+CREATE TABLE employee (
+  id int NOT NULL,
+  name VARCHAR(100),
+  mobile VARCHAR(100),
+  email VARCHAR(100)
+);
+```
+
+Add the below properties to the application.properties file..
+
+    spring.datasource.url=jdbc:mysql://localhost:3306/hibernate_test
+    spring.datasource.username=root
+
 ## Dependencies
 
 ```xml
