@@ -37,6 +37,11 @@ public class ItemCache {
         log.info("In ItemCache Component..");
         return itemRepo.deleteItem(id);
     }
+    
+    @CacheEvict(value="itemCache",allEntries=true)
+    public void evictCache() {
+    	log.info("Evicting all entries from itemCache.");
+    }
 
     @CachePut(value="itemCache")
     public void updateItem(Item item){

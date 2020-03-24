@@ -91,11 +91,33 @@ For example, if we run the ServerNode application again, we will see the followi
     Member [192.168.1.105]:5702 - d6b81800-2c78-4055-8a5f-7f5b65d49f30 this
     }
 
-## Test
+## Endpoints
 
-```curl
-curl --location --request GET 'localhost:9080/item/1' \
---header 'Content-Type: application/json'
-```
+1. Get
+    ```curl
+    curl --location --request GET 'localhost:9080/item/1' \
+    --header 'Content-Type: application/json'
+    ```
 
-![Output](img/output.png)
+    ![Output](/img/output.png)
+
+2. Update Cache
+
+    ```curl
+    curl --location --request PUT 'localhost:9080/updateItem' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{"id":1,"name":"Nokia","category":"Mobile"}'
+    ```
+
+3. Delete Single Cache
+
+    ```curl
+    curl --location --request DELETE 'localhost:9080/delete/1' \
+    --header 'Content-Type: application/json'
+    ```
+
+4. Delete All Cache
+
+    ```curl
+    curl --location --request DELETE 'localhost:9080/deleteall'
+    ```

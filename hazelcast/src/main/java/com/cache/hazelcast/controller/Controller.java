@@ -44,5 +44,12 @@ public class Controller{
         itemCache.deleteItem(id);
         return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
+    
+    @DeleteMapping("/deleteall")
+    @ResponseBody
+    public ResponseEntity<Void> deleteAllItem(){
+        itemCache.evictCache();
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+    }
 
 }
