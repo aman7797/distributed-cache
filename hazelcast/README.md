@@ -31,16 +31,16 @@ The overview of application developed as follows
 
         mysqld.exe --console
 
-    ![MySQL Setup](img/setup_mysql.png)
+    ![MySQL Setup](/img/setup_mysql.png)
 5. Done with the setup, we can start with the MySQL to start the SQL
 
         mysql -u root
-    ![MySQL Started](img/started_mysql.png)
+    ![MySQL Started](/img/started_mysql.png)
 6. Create database 
 
         CREATE DATABASE hibernate_test;
     
-    ![MySQL Started](img/create_database.png)
+    ![MySQL Started](/img/create_database.png)
 7. Create a table name `item`
     ```sql
     CREATE TABLE item(id int NOT NULL, name VARCHAR(20), category VARCHAR(20));
@@ -99,7 +99,6 @@ For example, if we run the ServerNode application again, we will see the followi
     --header 'Content-Type: application/json'
     ```
 
-    ![Output](/img/output.png)
 
 2. Update Cache
 

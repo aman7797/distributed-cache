@@ -90,4 +90,4 @@ https://github.com/aman7797/super-pancake/tree/master/Learn%20Redis%20And%20Util
     --header 'Content-Type: application/json' \
     --data-raw '{"id":3,"name":"Aman Lalpuria","company":"Juspay"}'
     ```
-    ![Get Programmer Output](/img/isEmpty_set.png)
+    ![Get Programmer Output](/img/isEmpty_Set.png)
