@@ -15,7 +15,7 @@ The overview of application developed as follows
 2. No memory/space loss or more consumption
 3. Reduce load on Master, to read 100 of data by different program through master can increase load that can be reduce by this.
 4. In any case if `Master` get down or fails, slave can be consider as Master
-5. If data get updated by any instance all the replicas will be updated automatically.
+5. Data synchronization happens internally between slaves
 
 ## Install & Setup Redis
 
