@@ -2,11 +2,9 @@
 
 Ehcache is an open source, standards-based cache that boosts performance, offloads your database, and simplifies scalability. It's the most widely-used Java-based cache because it's robust, proven, full-featured, and integrates with other popular libraries and frameworks. Ehcache scales from in-process caching, all the way to mixed in-process/out-of-process deployments with terabyte-sized caches
 
-![Architecture](/img/hazelcast-architecture.png)
-
 The overview of application developed as follows
 
-![Architecture](/img/project-architecture.png)
+![Architecture](/img/ehCache-architecture.png)
 
 ## Setup Database
 1. Download the MySQL zip
@@ -55,17 +53,17 @@ The overview of application developed as follows
 
 To configure EhCache create a ehcache.xml file -refer to /EhCache/src/main/resources/ehcache.xml
 
-1. <cache alias="itemCache">
+1. `<cache alias="itemCache">`
 This will create cache with name `itemCache`
 
-2. <key-type>java.lang.Object</key-type>
+2. `<key-type>java.lang.Object</key-type>`
 This will accept the `Key` of the type Object
 
 ## Endpoints
 
 1. Get
     ```curl
-    curl --location --request GET 'localhost:9080/item/1' \
+    curl --location --request GET 'localhost:9089/item/1' \
     --header 'Content-Type: application/json'
     ```
 
@@ -73,7 +71,7 @@ This will accept the `Key` of the type Object
 2. Update Cache
 
     ```curl
-    curl --location --request PUT 'localhost:9080/updateItem' \
+    curl --location --request PUT 'localhost:9089/updateItem' \
     --header 'Content-Type: application/json' \
     --data-raw '{"id":1,"name":"Nokia","category":"Mobile"}'
     ```
@@ -81,12 +79,12 @@ This will accept the `Key` of the type Object
 3. Delete Single Cache
 
     ```curl
-    curl --location --request DELETE 'localhost:9080/delete/1' \
+    curl --location --request DELETE 'localhost:9089/delete/1' \
     --header 'Content-Type: application/json'
     ```
 
 4. Delete All Cache
 
     ```curl
-    curl --location --request DELETE 'localhost:9080/deleteall'
+    curl --location --request DELETE 'localhost:9089/deleteall'
     ```
