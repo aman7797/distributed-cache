@@ -3,53 +3,31 @@ package com.cache.hazelcast.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.cache.hazelcast.cache.ItemCache;
 import com.cache.hazelcast.model.Item;
+import com.cache.hazelcast.service.ItemService;
 
 @RestController
-public class Controller{
+public class Controller {
 
-    @Autowired
-    ItemCache itemCache;
+	@Autowired
+    ItemService itemService;
     
     private static Logger log = LoggerFactory.getLogger(Controller.class);
     
     @GetMapping("/item/{itemId}")
     @ResponseBody
-    public ResponseEntity<Item> getItem(@PathVariable int itemId){
+    public Object getItem(@PathVariable int itemId){
     	log.info("RestController..");
         long start = System.currentTimeMillis();
-        Item item = itemCache.getItem(itemId);
+        Item item = itemService.getItemById(itemId);
         long end = System.currentTimeMillis();
-        log.info("Took : " + ((end - start) / 1000+" sec.") + "   output   :: "  + item.getName());
-        return new ResponseEntity<Item>(item, HttpStatus.OK);
+        log.info("Took : " + ((end - start) / 1000+" sec.") + "   output   :: " + item);
+		return item.toString();
+        
     }
-
-    @PutMapping("/updateItem")
-    @ResponseBody
-    public ResponseEntity<Item> updateItem(@RequestBody Item item){
-        if(item != null){
-            itemCache.updateItem(item);
-        }
-        return new ResponseEntity<Item>(item, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteItem(@PathVariable int id){
-        itemCache.deleteItem(id);
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
-    }
-    
-    @DeleteMapping("/deleteall")
-    @ResponseBody
-    public ResponseEntity<Void> deleteAllItem(){
-        itemCache.evictCache();
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
-    }
-
 }
