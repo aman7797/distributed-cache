@@ -11,45 +11,46 @@ import com.cache.ehCache.cache.ItemCache;
 import com.cache.ehCache.model.Item;
 
 @RestController
-public class Controller{
+public class Controller {
 
-    @Autowired
-    ItemCache itemCache;
-    
-    private static Logger log = LoggerFactory.getLogger(Controller.class);
-    
-    @GetMapping("/item/{itemId}")
-    @ResponseBody
-    public ResponseEntity<Item> getItem(@PathVariable int itemId){
-    	log.info("RestController..");
-        long start = System.currentTimeMillis();
-        Item item = itemCache.getItem(itemId);
-        long end = System.currentTimeMillis();
-        log.info("Took : " + ((end - start) / 1000+" sec.") + "   output   :: "  + item.getName());
-        return new ResponseEntity<Item>(item, HttpStatus.OK);
-    }
+	@Autowired
+	ItemCache itemCache;
 
-    @PutMapping("/updateItem")
-    @ResponseBody
-    public ResponseEntity<Item> updateItem(@RequestBody Item item){
-        if(item != null){
-            itemCache.updateItem(item);
-        }
-        return new ResponseEntity<Item>(item, HttpStatus.OK);
-    }
+	private static Logger log = LoggerFactory.getLogger(Controller.class);
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteItem(@PathVariable int id){
-        itemCache.deleteItem(id);
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
-    }
-    
-    @DeleteMapping("/deleteall")
-    @ResponseBody
-    public ResponseEntity<Void> deleteAllItem(){
-        itemCache.evictCache();
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
-    }
+	@GetMapping("/item/{itemId}")
+	@ResponseBody
+	public ResponseEntity<Item> getItem(@PathVariable int itemId) {
+		log.info("RestController..");
+		long start = System.currentTimeMillis();
+		Item item = itemCache.getItem(itemId);
+		long end = System.currentTimeMillis();
+		log.info("Took : " + ((end - start) / 1000 + " sec.") + "   output   :: " + item.getName());
+		return new ResponseEntity<Item>(item, HttpStatus.OK);
+	}
+
+	@PutMapping("/updateItem")
+	@ResponseBody
+	public ResponseEntity<Item> updateItem(@RequestBody Item item) {
+		if (item != null) {
+			itemCache.updateItem(item);
+		}
+		return new ResponseEntity<Item>(item, HttpStatus.OK);
+	}
+
+	// This will delete item from DB
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public ResponseEntity<Void> deleteItem(@PathVariable int id) {
+		itemCache.deleteItem(id);
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping("/deleteall")
+	@ResponseBody
+	public ResponseEntity<Void> deleteAllItem() {
+		itemCache.evictCache();
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
 
 }
