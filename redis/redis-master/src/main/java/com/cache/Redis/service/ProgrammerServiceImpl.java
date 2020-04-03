@@ -10,15 +10,18 @@ import com.cache.Redis.dao.ProgrammerRepository;
 import com.cache.Redis.model.Programmer;
 
 @Service
-public class ProgrammerServiceImpl implements ProgrammerService{
+public class ProgrammerServiceImpl implements ProgrammerService {
 
 	@Autowired
 	ProgrammerRepository repository;
-	
+
+	/*******************************************************************************************************************
+	 * String Operations
+	 *******************************************************************************************************************/
 	@Override
 	public void setProgrammerAsString(String idKey, String programmer) {
 		repository.setProgrammerAsString(idKey, programmer);
-		
+
 	}
 
 	@Override
@@ -26,6 +29,10 @@ public class ProgrammerServiceImpl implements ProgrammerService{
 		return repository.getProgrammerAsString(idKey);
 	}
 
+
+	/*******************************************************************************************************************
+	 * List Operations
+	 *******************************************************************************************************************/
 	@Override
 	public void addToProgrammerList(Programmer programmer) {
 		repository.addToProgrammerList(programmer);
@@ -41,10 +48,13 @@ public class ProgrammerServiceImpl implements ProgrammerService{
 		return repository.getProgrmmerListCount();
 	}
 
+	/*******************************************************************************************************************
+	 * Set Operations
+	 *******************************************************************************************************************/
 	@Override
 	public void addToProgrammerSet(Programmer... programmer) {
-		 repository.addToProgrammerSet(programmer);
-		
+		repository.addToProgrammerSet(programmer);
+
 	}
 
 	@Override
@@ -55,6 +65,26 @@ public class ProgrammerServiceImpl implements ProgrammerService{
 	@Override
 	public boolean isSerMember(Programmer programmer) {
 		return repository.isSerMember(programmer);
+	}
+
+	/*******************************************************************************************************************
+	 * Flush All
+	 *******************************************************************************************************************/
+	
+	@Override
+	public void deleteString(String idKey) {
+		repository.deleteString(idKey);
+	}
+	
+	@Override
+	public void deleteAllList() {
+		repository.deleteAllList();
+	}
+
+	@Override
+	public void deleteAllSet() {
+		repository.deleteAllSet();
+		
 	}
 
 }
