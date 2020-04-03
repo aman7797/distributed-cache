@@ -70,7 +70,7 @@ public class Controller {
 	}
 
 	@GetMapping("/item-string/{itemId}")
-	public Item readItemString(@PathVariable String itemId) {
+	public String readItemString(@PathVariable String itemId) {
 		return itemService.getItemAsString(itemId);
 	}
 
@@ -190,7 +190,7 @@ public class Controller {
 	
 	@DeleteMapping("/item-set")
 	public String deleteAllItemSet() {
-		itemService.deleteAllItemSet();
+		itemService.deleteAllSet();
 		return "DELETED";
 	}
 }
