@@ -36,7 +36,7 @@ public class ItemDaoImpl extends JdbcDaoSupport implements ItemDao{
 	private static Logger log = LoggerFactory.getLogger(ItemDaoImpl.class);
 	
 	@Override
-	public void insertItem(Item cus) {
+	public void insertItem(Item item) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,9 +1,12 @@
 package com.cache.Redis.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -22,10 +26,10 @@ public class ItemRepositoryImpl extends JdbcDaoSupport implements ItemRepository
 
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
-	
+
 	@Autowired
 	DataSource dataSource;
-	
+
 	@PostConstruct
 	private void initialize() {
 		setDataSource(dataSource);
@@ -57,38 +61,45 @@ public class ItemRepositoryImpl extends JdbcDaoSupport implements ItemRepository
 
 	@Override
 	public Item getItemById(int itemId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM Item WHERE id = ?";
+		return (Item) getJdbcTemplate().queryForObject(sql, new Object[] { itemId }, new RowMapper<Item>() {
+			@Override
+			public Item mapRow(ResultSet row, int rwNumber) throws SQLException {
+				Item item = new Item();
+				item.setId(row.getInt("id"));
+				item.setName(row.getString("name"));
+				item.setCategory(row.getString("category"));
+				return item;
+			}
+		});
 	}
 
 	@Override
-	public void setItemAsString(String idKey, String Item) {
-		// TODO Auto-generated method stub
-
+	public void setItemAsString(String idKey, String item) {
+		redisTemplate.opsForValue().set(idKey, item);
+		// expire.refresh.delete
+		redisTemplate.expire(idKey, 10, TimeUnit.SECONDS);
 	}
 
 	@Override
 	public String getItemAsString(String idKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) redisTemplate.opsForValue().get(idKey);
 	}
 
 	@Override
-	public void addToItemList(Item Item) {
-		// TODO Auto-generated method stub
+	public void addToItemList(Item item) {
+		redisTemplate.opsForList().leftPush(REDIS_LIST_KEY, item);
 
 	}
 
 	@Override
 	public List<Item> getItemListMembers() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List) redisTemplate.opsForList().range(REDIS_LIST_KEY, 0, -1);
 	}
 
 	@Override
 	public Long getItemListCount() {
-		// TODO Auto-generated method stub
-		return null;
+		return redisTemplate.opsForList().size(REDIS_LIST_KEY);
 	}
 
 	@Override
@@ -109,19 +120,18 @@ public class ItemRepositoryImpl extends JdbcDaoSupport implements ItemRepository
 
 	@Override
 	public void deleteString(String idKey) {
-		// TODO Auto-generated method stub
-
+		redisTemplate.delete(idKey);
 	}
 
 	@Override
 	public void deleteAllList() {
-		// TODO Auto-generated method stub
 
+		redisTemplate.delete(REDIS_LIST_KEY);
 	}
 
 	@Override
 	public void deleteAllSet() {
-		// TODO Auto-generated method stub
+		redisTemplate.delete(REDIS_SET_KEY);
 
 	}
 
